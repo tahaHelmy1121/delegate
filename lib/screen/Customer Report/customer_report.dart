@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme/fonts.dart';
 import '../../data_test.dart';
-import '../../theme/fonts.dart';
 import '../start_visit/start_visit.dart';
 
 class CustomerReport extends StatefulWidget {

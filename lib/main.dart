@@ -5,10 +5,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import 'core/helper/cache_helper.dart';
+import 'core/helper/di.dart';
 import 'l10n/l10n.dart';
 import 'localization/localprovider/locale_provider.dart';
 void main() async{
-  await WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  initServiceLoactor();
+  await sl<CacheHelper>().init();
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LocaleProvider(context: context)..init(),lazy: true,),

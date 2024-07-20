@@ -1,8 +1,8 @@
 import 'package:delegate/screen/login/widget/custom_auth_field.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/theme/fonts.dart';
 import '../../custom_widget/drewnavbar.dart';
-import '../../theme/fonts.dart';
 import '../Visit history/Visit history_view.dart';
 
 class LoginView extends StatefulWidget {

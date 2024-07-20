@@ -42,6 +42,12 @@ dependencies:
   intl:
   provider:
   sizer:
+  geocoding: ^2.0.5
+  geolocator: ^8.0.1
+  fluttertoast:
+  flutter_flushbar:
+  another_flushbar:
+  get_it:
 
 
 dev_dependencies:

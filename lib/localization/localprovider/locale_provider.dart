@@ -1,5 +1,8 @@
+import 'package:delegate/core/helper/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../core/helper/di.dart';
 
 class LocaleProvider extends ChangeNotifier {
   BuildContext context;
@@ -25,14 +28,12 @@ class LocaleProvider extends ChangeNotifier {
   }
 
   saveLocale(Locale locale) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('language', locale.languageCode);
+    sl<CacheHelper>().saveData(key: "language", value: locale.languageCode);
     notifyListeners();
   }
 
   Future<Locale> getLocale() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String languageCode = prefs.getString('language') ?? 'ar';
+    String languageCode = sl<CacheHelper>().getData(key: "language")??"ar";
     print(languageCode);
     return Locale(languageCode);
 

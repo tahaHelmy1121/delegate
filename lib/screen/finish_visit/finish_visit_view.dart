@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/fonts.dart';
+import '../../core/theme/fonts.dart';
 
 class finishVisit extends StatefulWidget {
   const finishVisit({super.key});

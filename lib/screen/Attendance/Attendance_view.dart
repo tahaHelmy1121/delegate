@@ -10,6 +10,9 @@ class Attendance extends StatefulWidget {
   @override
   State<Attendance> createState() => _AttendanceState();
 }
+String? address;
+late double lat;
+late double lng;
 
 class _AttendanceState extends State<Attendance> {
   @override
