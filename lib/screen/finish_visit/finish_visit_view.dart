@@ -53,10 +53,10 @@ class _finishVisitState extends State<finishVisit> {
                       children: [
                         Container(
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              "assets/images/FBrB7lHXsAM36lv.jpg",
-                              fit: BoxFit.cover,
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.network(
+                           widget.image,
+                              fit: BoxFit.contain,
                               width: MediaQuery.of(context).size.width * 0.4,
                               height:
                                   MediaQuery.of(context).size.height * 0.250,

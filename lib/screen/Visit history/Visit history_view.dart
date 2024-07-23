@@ -184,12 +184,14 @@ class _VisitHistoryViewState extends State<VisitHistoryView> {
                                             MaterialPageRoute(
                                                 builder: (_) =>
                                                     finishVisit(
-                                    
+                                                     image: context.read<VisitsProvider>().visits![index].image,
                                                     )));
                                       },
                                           child: Text(
                                           "تم بدأ الزياره"),
-                                        ): Text("تم نهاية الزيارة"),)
+                                        ): InkWell(
+                                        onTap: (){},
+                                        child: Text("تم نهاية الزيارة")),)
                             ),
                           ),
                         ),

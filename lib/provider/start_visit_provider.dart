@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,14 +26,9 @@ class StartVisitProvider extends ChangeNotifier {
     _file = value;
   }
 
-  var _imageBase;
+var imageBase;
 
-  get imageBase => _imageBase;
 
-  set imageBase(value) {
-    _imageBase = value;
-    notifyListeners();
-  }
 
   bool _loadData = false;
 
@@ -43,24 +39,23 @@ class StartVisitProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  final picker = ImagePicker();
-  File? _image;
-  var _isImageValid = true;
 
-  bool _isInit = true;
 
-  File? diplayImage;
-  XFile? pickedImage;
 
-  void uploadSingleImage() async {
+  var x;
+  File ?  diplayImage;
+  uploadSingleImage() async {
     var pickedImage =
     await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
-      diplayImage = File(pickedImage.path);
-      imageBase = base64Encode(diplayImage!.readAsBytesSync());
- debugPrint("imageBase : $imageBase");
-      this.pickedImage = pickedImage;
-//CHANGE THIS WITH CHANGE NOTIFIER
+      diplayImage =await File(pickedImage.path);
+      print("vvvvvvvvvvvvvvvv");
+      print(diplayImage);
+      print("vvvvvvvvvvvvvvvv");
+var bytes = await diplayImage!.readAsBytes();
+print("xxxxxxxxxxxxxxxxxxxxx");
+   x= base64Encode(bytes!);
+      print("xxxxxxxxxxxxxxxxxxxxx");
       notifyListeners();
     } else {
       //CHANGE THIS WITH CHANGE NOTIFIER
@@ -68,11 +63,11 @@ class StartVisitProvider extends ChangeNotifier {
     }
   }
 
-  void clearPickedImage() {
-    pickedImage = null;
-    diplayImage = null;
-    notifyListeners();
-  }
+  // void clearPickedImage() {
+  //   pickedImage = null;
+  //   diplayImage = null;
+  //   notifyListeners();
+  // }
 
   SharedPreferences? sharedPreferences;
   StartVisitModel? startVisitModel;
@@ -89,6 +84,9 @@ class StartVisitProvider extends ChangeNotifier {
     await SharedPreferences.getInstance();
     var user_id = sharedPreferences!.getString('user_id');
     loadData = true;
+    print("xxxxxxxxxxxxxxxxxxxxxxxxx");
+    print(x);
+    print("xxxxxxxxxxxxxxxxxxxxxxxxx");
     startVisitModel = await StartVisitRepo.startVisitRepo(
       context: context,
       userId: user_id,
@@ -96,28 +94,12 @@ class StartVisitProvider extends ChangeNotifier {
       start_lat: startLat,
       start_long: startLong,
       clientid: clientId,
-      pickedImage: diplayImage!,
+      pickedImage: x,
     );
-    if (startVisitModel!.status == 1) {
-      return drewAwesomeDialog(
-          context: context,
-          dialogType: DialogType.success,
-          describe: startVisitModel!.reason)
-          .show()
-          .then((value) {
-        navigatorToScreen(
-            context: context, removeStack: true, widget: VisitHistoryView());
-        print(diplayImage);
-      });
-    } else {
-      drewAwesomeDialog(
-          context: context,
-          dialogType: DialogType.error,
-          describe: startVisitModel!.reason)
-        ..show();
-      loadData = false;
+
+      print(startVisitModel!.reason);
     }
 
     notifyListeners();
   }
-}
+
