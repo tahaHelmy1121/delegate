@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 Widget drewCustomSearchField(
     {required BuildContext context,
       Function(String)? onTab,
+      valid,
       hint,
-      required TextEditingController search}) {
+      required TextEditingController controller}) {
   return Stack(
     children: [
       Row(
@@ -19,13 +20,8 @@ Widget drewCustomSearchField(
             width:MediaQuery.of(context).size.width*0.8,
             child: TextFormField(
               autofocus: false,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  //          return "${AppLocalizations.of(context)!.search product}";
-                }
-              },
-
-         //     controller: context.watch<SearchProvider>().search,
+           validator: valid,
+              controller: controller,
               style: TextStyle(letterSpacing: 1),
               textDirection: TextDirection.rtl,
               //      controller: context.read<LoginViewModel>().textEditingControllerMobile,

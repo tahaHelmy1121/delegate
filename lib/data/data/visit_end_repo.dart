@@ -9,20 +9,27 @@ import '../../core/helper/app_url.dart';
 import '../../core/helper/showerrorconnection.dart';
 
 
-class LoginRepo {
-  static getLogin({
+class EndVisit {
+  static endtVisit({
     required BuildContext context,
     var
-    userName,
-    password,
+    user_id,
+    visit_id,
+    clientid,
+    end_lat,
+    end_long,
+    imageendvisit,
   }) async {
     LoginModel? login;
     Map<String,dynamic> body = {
-      'username': userName,
-      'password': password,
-
+      'user_id': user_id,
+      'visit_id': visit_id,
+      'clientid': clientid,
+      'end_lat': end_lat,
+      'end_long': end_long,
+      'imageendvisit': imageendvisit,
     };
-    var response = await http.post(Uri.parse(loginUrl),body: jsonEncode(body));
+    var response = await http.post(Uri.parse(startEnd),body: jsonEncode(body));
     if (response.statusCode == 200) {
       return login = loginModelFromJson(response.body);
     } else {

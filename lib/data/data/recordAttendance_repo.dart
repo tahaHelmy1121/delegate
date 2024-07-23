@@ -1,30 +1,34 @@
 
 
+
+
+
 import 'dart:convert';
 
-import 'package:delegate/data/model/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../core/helper/app_url.dart';
 import '../../core/helper/showerrorconnection.dart';
+import '../model/recorde_attend.dart';
 
 
-class LoginRepo {
-  static getLogin({
+class RecordAttendanceRepo {
+  static getrecordAttendance({
     required BuildContext context,
-    var
-    userName,
-    password,
+    user_id,
+    lat,
+    long
   }) async {
-    LoginModel? login;
+    Recordattendance? recordattendance;
     Map<String,dynamic> body = {
-      'username': userName,
-      'password': password,
+      'user_id': user_id,
+      'lat': lat,
+      'long':long,
 
     };
-    var response = await http.post(Uri.parse(loginUrl),body: jsonEncode(body));
+    var response = await http.post(Uri.parse(recordeAttendUrl),body: jsonEncode(body));
     if (response.statusCode == 200) {
-      return login = loginModelFromJson(response.body);
+      return recordattendance = recordattendanceFromJson(response.body);
     } else {
       return showErrorConnection(context: context, error: "حدث خطأ");
     }

@@ -3,7 +3,19 @@ import 'package:flutter/material.dart';
 import '../../core/theme/fonts.dart';
 
 class finishVisit extends StatefulWidget {
-  const finishVisit({super.key});
+  var startlat;
+  var startlong;
+  var clientId;
+  var visit_id;
+  var image;
+
+  finishVisit(
+      {super.key,
+      this.image,
+      this.startlat,
+      this.startlong,
+      this.clientId,
+      this.visit_id});
 
   @override
   State<finishVisit> createState() => _finishVisitState();
@@ -46,14 +58,15 @@ class _finishVisitState extends State<finishVisit> {
                               "assets/images/FBrB7lHXsAM36lv.jpg",
                               fit: BoxFit.cover,
                               width: MediaQuery.of(context).size.width * 0.4,
-                              height: MediaQuery.of(context).size.height * 0.250,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.250,
                             ),
                           ),
                         ),
                         Text(
                           "groceryبقالة",
                           style: TextStyles.font24BlackBold
-                              .copyWith(color: Colors.black,letterSpacing: 2),
+                              .copyWith(color: Colors.black, letterSpacing: 2),
                         )
                       ],
                     ),
@@ -64,7 +77,8 @@ class _finishVisitState extends State<finishVisit> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(14),
-                      margin: EdgeInsets.only( top:MediaQuery.of(context).size.height*.300),
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * .300),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.white),
@@ -83,7 +97,8 @@ class _finishVisitState extends State<finishVisit> {
                                           color: Colors.grey.shade300,
                                         )),
                                     border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(40))),
+                                        borderRadius:
+                                            BorderRadius.circular(40))),
                                 dropdownMenuEntries: [
                                   DropdownMenuEntry(value: "gt4", label: "gt4")
                                 ]),

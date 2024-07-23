@@ -1,4 +1,3 @@
-import 'package:delegate/generated/assets.dart';
 import 'package:flutter/material.dart';
 
 class ProfileView extends StatefulWidget {

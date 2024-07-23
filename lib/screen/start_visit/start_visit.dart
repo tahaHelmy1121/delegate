@@ -1,15 +1,27 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
-import '../finish_visit/finish_visit_view.dart';
+import 'package:delegate/provider/start_visit_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class StartVisit extends StatefulWidget {
-  const StartVisit({super.key});
+  var startlat;
+  var startlong;
+  var clientId;
+  var visit_id;
+
+  StartVisit(
+      {super.key, this.clientId, this.startlat, this.startlong, this.visit_id});
 
   @override
   State<StartVisit> createState() => _StartVisitState();
 }
 
 class _StartVisitState extends State<StartVisit> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +50,6 @@ class _StartVisitState extends State<StartVisit> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-
                       child: Image.asset(
                         "assets/images/recieved.png",
                         width: MediaQuery.of(context).size.width * 0.4,
@@ -57,9 +68,15 @@ class _StartVisitState extends State<StartVisit> {
                           Stack(
                             children: [
                               Container(
-                                child: Image.asset(
-                                  "assets/images/R (1).png",
-                                  fit: BoxFit.contain,
+                                child: InkWell(
+                                  onTap: () {
+                               context.read<StartVisitProvider>().uploadSingleImage();
+                                  },
+                                  child:context.watch<StartVisitProvider>().diplayImage==null?Image.asset("assets/images/R (1).png"): Image.file(
+    context.watch<StartVisitProvider>().diplayImage!,
+                                    width: MediaQuery.of(context).size.width * 0.3,
+                                    height: 100,
+                                  ),
                                 ),
                                 width: MediaQuery.of(context).size.width * 0.3,
                                 height: 100,
@@ -72,23 +89,30 @@ class _StartVisitState extends State<StartVisit> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 40,),
+                          SizedBox(
+                            height: 40,
+                          ),
                           InkWell(
-                            onTap: (){
-                            Navigator.push(context,MaterialPageRoute(builder:(_)=>finishVisit()));
+                            onTap: () {
+                              context.read<StartVisitProvider>().getSatrtVisit(
+                                  context: context,
+                                  clientId: widget.clientId,
+                                  startLat: widget.startlat,
+                                  startLong: widget.startlong,
+                                  visit_id: widget.visit_id);
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.5,
                               child: Center(
                                   child: Center(
                                       child: Text(
-                                        "حفظ",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            letterSpacing: 1,
-                                            fontWeight: FontWeight.bold),
-                                      ))),
+                                "حفظ",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.bold),
+                              ))),
                               height: 60,
                               decoration: BoxDecoration(
                                   color: Colors.black,
@@ -97,7 +121,8 @@ class _StartVisitState extends State<StartVisit> {
                           )
                         ],
                       ),
-                      margin: EdgeInsets.only(top:MediaQuery.of(context).size.height*.255),
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * .255),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.white),

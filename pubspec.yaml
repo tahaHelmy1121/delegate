@@ -47,7 +47,14 @@ dependencies:
   fluttertoast:
   flutter_flushbar:
   another_flushbar:
+  latlng:
+  permission_handler:
+  image_picker:
+  http_parser:
+  path:
   get_it:
+  http:
+  awesome_dialog:
 
 
 dev_dependencies:
