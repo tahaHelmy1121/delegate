@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../core/helper/app_url.dart';
 import '../../core/helper/showerrorconnection.dart';
+import '../model/visit_end_model.dart';
 
 
 class EndVisit {
@@ -18,20 +19,23 @@ class EndVisit {
     clientid,
     end_lat,
     end_long,
-    imageendvisit,
+    visitcaseid,
+    note,
   }) async {
-    LoginModel? login;
+    EndVisitModel endVisitModel;
     Map<String,dynamic> body = {
       'user_id': user_id,
       'visit_id': visit_id,
       'clientid': clientid,
       'end_lat': end_lat,
       'end_long': end_long,
-      'imageendvisit': imageendvisit,
+      'visitcaseid':visitcaseid,
+      'note':note,
+
     };
-    var response = await http.post(Uri.parse(startEnd),body: jsonEncode(body));
+    var response = await http.post(Uri.parse("https://erp.gt4it.com/taha2024/controllers/visitsApi.php?do=visitEnd"),body: jsonEncode(body));
     if (response.statusCode == 200) {
-      return login = loginModelFromJson(response.body);
+      return endVisitModel = endVisitModelFromJson(response.body);
     } else {
       return showErrorConnection(context: context, error: "حدث خطأ");
     }
