@@ -1,3 +1,10 @@
+import 'dart:convert';
+
+import 'package:delegate/data/model/visitcases_model.dart';
+
+List<ClientsModel> ClientsFromJson(String str) => List<ClientsModel>.from(json.decode(str).map((x) => VisitsCasess.fromJson(x)));
+
+
 class ClientsModel {
   var clientid;
   var clientname;
