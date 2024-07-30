@@ -7,6 +7,7 @@ class Assets {
   static const String imagesDeliveryManWithBoxPostmanDesignIsolatedOnWhiteBackgroundCourierInHatAndUniformWithPackageVector = 'assets/images/delivery-man-with-box-postman-design-isolated-on-white-background-courier-in-hat-and-uniform-with-package-vector.jpg';
   static const String imagesEdit = 'assets/images/Edit.png';
   static const String imagesFBrB7lHXsAM36lv = 'assets/images/FBrB7lHXsAM36lv.jpg';
+  static const String imagesIcon  = 'assets/images/icon (2).png';
   static const String imagesIcons8User80 = 'assets/images/icons8-user-80.png';
   static const String imagesNoDataOld = 'assets/images/no-data-old.png';
   static const String imagesOIP = 'assets/images/OIP.jpg';

@@ -33,7 +33,7 @@ class EndVisit {
       'note':note,
 
     };
-    var response = await http.post(Uri.parse("https://erp.gt4it.com/taha2024/controllers/visitsApi.php?do=visitEnd"),body: jsonEncode(body));
+    var response = await http.post(Uri.parse("${baseUrl}?do=visitEnd"),body: jsonEncode(body));
     if (response.statusCode == 200) {
       return endVisitModel = endVisitModelFromJson(response.body);
     } else {

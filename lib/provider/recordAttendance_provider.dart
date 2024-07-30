@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:delegate/custom_widget/drewnavbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,7 +41,7 @@ class RecordAttendanceProvider extends ChangeNotifier {
           .show()
           .then((value) {
         navigatorToScreen(
-            context: context, removeStack: true, widget: VisitHistoryView());
+            context: context, removeStack: true, widget: DrewNavigationBar());
       });
     } else {
       drewAwesomeDialog(

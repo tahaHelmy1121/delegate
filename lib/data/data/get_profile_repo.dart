@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../core/helper/app_url.dart';
 import '../../core/helper/showerrorconnection.dart';
 import '../model/profile.dart';
 
@@ -17,7 +18,7 @@ class ProfileRepo {
     };
     var response = await http.post(
         Uri.parse(
-            "https://erp.gt4it.com/taha2024/controllers/visitsApi.php?do=profile"),
+            "${baseUrl}?do=profile"),
         body: jsonEncode(body));
     if (response.statusCode == 200) {
       return profileModel = profileModelFromJson(response.body);

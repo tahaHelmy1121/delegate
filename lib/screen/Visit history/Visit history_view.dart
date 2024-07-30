@@ -1,6 +1,5 @@
 import 'package:delegate/core/helper/nodata.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
@@ -21,18 +20,16 @@ class _VisitHistoryViewState extends State<VisitHistoryView> {
   var lat;
   var lng;
 
- @override
+  @override
   void initState() {
-   getCurrentLocation().then((value) async {
-     print('${value.latitude}********${value.longitude}');
-     lat = value.latitude;
-     lng = value.longitude;
+    getCurrentLocation().then((value) async {
+      print('${value.latitude}********${value.longitude}');
+      lat = value.latitude;
+      lng = value.longitude;
 
-     setState(() {});
-   });
-   setState(() {
-
-   });
+      setState(() {});
+    });
+    setState(() {});
     super.initState();
   }
 
@@ -40,21 +37,7 @@ class _VisitHistoryViewState extends State<VisitHistoryView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => Attendance(
-                            lat: lat,
-                            long: lng,
-                            address: address,
-                          )));
-            },
-            child: Icon(
-              Icons.add_chart,
-              color: Colors.white,
-            )),
+
         centerTitle: true,
         backgroundColor: Colors.black,
         title: Text(
@@ -77,45 +60,45 @@ class _VisitHistoryViewState extends State<VisitHistoryView> {
                               columns: [
                                   DataColumn(
                                     label: Padding(
+                                      padding: const EdgeInsets.only(right: 50),
+                                      child: const Text("العميل",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black),
+                                          textAlign: TextAlign.center),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                      label: Padding(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: const Text("المنطقة",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                        textAlign: TextAlign.center),
+                                  )),
+                                  DataColumn(
+                                      label: Padding(
+                                    padding: EdgeInsets.only(right: 15),
+                                    child: const Text("صورة",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                        textAlign: TextAlign.center),
+                                  )),
+                                  DataColumn(
+                                    label: Padding(
                                         padding: EdgeInsets.only(left: 15),
                                         child: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons.verified_outlined),
                                         )),
                                   ),
-                                  DataColumn(
-                                      label: Padding(
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: const Text("صورة",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black),
-                                        textAlign: TextAlign.center),
-                                  )),
-                                  DataColumn(
-                                      label: Padding(
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: const Text("المنطقة",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black),
-                                        textAlign: TextAlign.center),
-                                  )),
-                                  DataColumn(
-                                    label: Padding(
-                                      padding: EdgeInsets.only(left: 15),
-                                      child: const Text("العميل",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black),
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  ),
                                 ],
-                              columnSpacing: 80,
+                              columnSpacing: 50,
                               dataRowColor: MaterialStateProperty.all(
                                   Colors.grey.shade50.withOpacity(0.9)),
                               dataRowHeight: 80,
@@ -134,11 +117,72 @@ class _VisitHistoryViewState extends State<VisitHistoryView> {
                                     InkWell(
                                       onTap: () {},
                                       child: Container(
+                                        alignment: Alignment.center,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                        child: Text(context
+                                            .watch<VisitsProvider>()
+                                            .visits![index]
+                                            .clientname,   style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),),
+                                      ),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.2,
+                                        child: Text(
+                                          context
+                                              .watch<VisitsProvider>()
+                                              .visits![index]
+                                              .governmentname
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    InkWell(
+                                      onTap: () {},
+                                      child: Container(
                                           alignment: Alignment.center,
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
                                               0.2,
+                                          child: context
+                                                      .watch<VisitsProvider>()
+                                                      .visits![index]
+                                                      .image ==
+                                                  null
+                                              ? Container()
+                                              : Image.network(
+                                                  context
+                                                      .watch<VisitsProvider>()
+                                                      .visits![index]
+                                                      .image
+                                                      .toString(),
+                                                )),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
                                           child: InkWell(
                                             onTap: () {
                                               Navigator.push(
@@ -156,8 +200,7 @@ class _VisitHistoryViewState extends State<VisitHistoryView> {
                                                                     VisitsProvider>()
                                                                 .visits![index]
                                                                 .clientid,
-                                                            startlong: lng,
-                                                            startlat: lat,
+
                                                           )));
                                             },
                                             child: context
@@ -165,7 +208,13 @@ class _VisitHistoryViewState extends State<VisitHistoryView> {
                                                         .visits![index]
                                                         .newvisit ==
                                                     "0"
-                                                ? Text("ابدا الزيارة")
+                                                ? Text(
+                                                    "ابدا الزيارة",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )
                                                 : context
                                                             .watch<
                                                                 VisitsProvider>()
@@ -187,8 +236,7 @@ class _VisitHistoryViewState extends State<VisitHistoryView> {
                                                                             .read<VisitsProvider>()
                                                                             .visits![index]
                                                                             .image,
-                                                                        endLong:
-                                                                            lng,
+
                                                                         visit_id: context
                                                                             .read<VisitsProvider>()
                                                                             .visits![index]
@@ -197,71 +245,21 @@ class _VisitHistoryViewState extends State<VisitHistoryView> {
                                                                             .read<VisitsProvider>()
                                                                             .visits![index]
                                                                             .clientid,
-                                                                        endLat:
-                                                                            lat,
+
                                                                       )));
                                                         },
                                                         child: Text(
-                                                            "تم بدأ الزياره"),
+                                                            "تم بدأ الزياره",   style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 18),),
                                                       )
                                                     : InkWell(
                                                         onTap: () {},
                                                         child: Text(
-                                                            "تم نهاية الزيارة")),
+                                                            "تم نهاية الزيارة",   style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 18),)),
                                           )),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    InkWell(
-                                      onTap: () {},
-                                      child: Container(
-                                          alignment: Alignment.center,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          child: context
-                                                      .watch<VisitsProvider>()
-                                                      .visits![index]
-                                                      .image ==
-                                                  null
-                                              ? Container()
-                                              : Image.network(context
-                                                  .watch<VisitsProvider>()
-                                                  .visits![index]
-                                                  .image
-                                                  .toString())),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    InkWell(
-                                      onTap: () {},
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.2,
-                                        child: Text(context
-                                            .watch<VisitsProvider>()
-                                            .visits![index]
-                                            .governmentname
-                                            .toString()),
-                                      ),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    InkWell(
-                                      onTap: () {},
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.2,
-                                        child: Text(context
-                                            .watch<VisitsProvider>()
-                                            .visits![index]
-                                            .clientname),
-                                      ),
                                     ),
                                   ),
                                 ]);

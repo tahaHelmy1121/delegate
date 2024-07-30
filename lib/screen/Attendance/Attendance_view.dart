@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 
+import '../../custom_widget/drewnavbar.dart';
 import '../../provider/recordAttendance_provider.dart';
 
 
@@ -24,6 +25,22 @@ class Attendance extends StatefulWidget {
 
 class _AttendanceState extends State<Attendance> {
 
+  var address;
+  var lat;
+  var lng;
+
+  @override
+  void initState() {
+    getCurrentLocation().then((value) async {
+      print('${value.latitude}********${value.longitude}');
+      lat = value.latitude;
+      lng = value.longitude;
+
+      setState(() {});
+    });
+    setState(() {});
+    super.initState();
+  }
 
 
 
@@ -39,7 +56,7 @@ class _AttendanceState extends State<Attendance> {
         backgroundColor: Colors.black,
 
         title: Text(
-      "تسجيل الحضور",
+ "سجل حضورك",
         style: TextStyle(fontSize: 16),
         ),
 
@@ -48,7 +65,7 @@ class _AttendanceState extends State<Attendance> {
   create: (BuildContext context) => RecordAttendanceProvider(context: context),
   builder: (context , prov){
     return SingleChildScrollView(
-      child: Column(
+      child: lat!=null?Column(
         children: [
           Stack(
             children: [
@@ -72,53 +89,62 @@ class _AttendanceState extends State<Attendance> {
                   ),
                 ],
               ),
-              Container(
-                padding: EdgeInsets.all(14),
-                margin: EdgeInsets.only(right: 20, top:MediaQuery.of(context).size.height*.250),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white),
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: MediaQuery.of(context).size.height * 0.6,
-                child: Column(
-                  children: [
-                    Stack(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(14),
+                    margin: EdgeInsets.only( top:MediaQuery.of(context).size.height*.250),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: Column(
                       children: [
+                        Stack(
+                          children: [
 
+                          ],
+                        ),
+                        SizedBox(height: 40,),
+                        InkWell(
+                          onTap: (){
+                            context.read<RecordAttendanceProvider>().GetRecordAttendance(
+                              lat: lat,
+                              long:lng,
+                            );
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Center(
+                                child: Center(
+                                    child: Text(
+                                      "سجل حضورك",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.bold),
+                                    ))),
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                        )
                       ],
                     ),
-                    SizedBox(height: 40,),
-                    InkWell(
-                      onTap: (){
-                        context.read<RecordAttendanceProvider>().GetRecordAttendance(
-                          lat: widget.lat,
-                          long: widget.long,
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Center(
-                            child: Center(
-                                child: Text(
-                                  "سجل حضورك",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      letterSpacing: 1,
-                                      fontWeight: FontWeight.bold),
-                                ))),
-                        height: 60,
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(20)),
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
         ],
+      ):Center(
+        child: CircularProgressIndicator(
+          color: Colors.black,
+        ),
       ),
     );
 

@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:delegate/custom_widget/drewnavbar.dart';
 import 'package:delegate/data/model/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,7 +59,7 @@ class LoginProvider extends ChangeNotifier {
           SharedPreferences.getInstance()
               .then((value) => value.setString('user_id', loginModel!.userId.toString()));
           navigatorToScreen(
-              context: context, removeStack: true, widget: VisitHistoryView());
+              context: context, removeStack: true, widget: DrewNavigationBar());
         });
       } else {
         drewAwesomeDialog(

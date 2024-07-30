@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:delegate/data/model/visitcases_model.dart';
 
-List<ClientsModel> ClientsFromJson(String str) => List<ClientsModel>.from(json.decode(str).map((x) => VisitsCasess.fromJson(x)));
+List<ClientsModel> ClientsFromJson(String str) => List<ClientsModel>.from(json.decode(str).map((x) => ClientsModel.fromJson(x)));
 
 
 class ClientsModel {
@@ -168,60 +167,5 @@ class ClientsModel {
     vimage = json['vimage'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['clientid'] = this.clientid;
-    data['clientname'] = this.clientname;
-    data['clientaddress'] = this.clientaddress;
-    data['clientphone'] = this.clientphone;
-    data['clientmobile'] = this.clientmobile;
-    data['clientdebt'] = this.clientdebt;
-    data['clientdetails'] = this.clientdetails;
-    data['conditions'] = this.conditions;
-    data['clientdate'] = this.clientdate;
-    data['userid'] = this.userid;
-    data['branchId'] = this.branchId;
-    data['clientareaid'] = this.clientareaid;
-    data['clientcode'] = this.clientcode;
-    data['dailyentryid'] = this.dailyentryid;
-    data['rondomtxt'] = this.rondomtxt;
-    data['clientStoreIds'] = this.clientStoreIds;
-    data['obygyPatientId'] = this.obygyPatientId;
-    data['debtLimit'] = this.debtLimit;
-    data['typeclientid'] = this.typeclientid;
-    data['priceTypeId'] = this.priceTypeId;
-    data['lastEditUser'] = this.lastEditUser;
-    data['inUse'] = this.inUse;
-    data['card_number'] = this.cardNumber;
-    data['file_faida'] = this.fileFaida;
-    data['specialDiscount'] = this.specialDiscount;
-    data['specialDiscountVal'] = this.specialDiscountVal;
-    data['file'] = this.file;
-    data['addDate'] = this.addDate;
-    data['mandobCollectRatio'] = this.mandobCollectRatio;
-    data['webApiId'] = this.webApiId;
-    data['clientRFID'] = this.clientRFID;
-    data['linkedSupplierId'] = this.linkedSupplierId;
-    data['postponeDays'] = this.postponeDays;
-    data['studentid'] = this.studentid;
-    data['taxnumber'] = this.taxnumber;
-    data['password'] = this.password;
-    data['clientTypeForTree'] = this.clientTypeForTree;
-    data['treeId'] = this.treeId;
-    data['husbandNameObgy'] = this.husbandNameObgy;
-    data['txtNameE'] = this.txtNameE;
-    data['facility'] = this.facility;
-    data['delegate'] = this.delegate;
-    data['txtemail'] = this.txtemail;
-    data['commercial'] = this.commercial;
-    data['valtaxnumber'] = this.valtaxnumber;
-    data['clientaddress2'] = this.clientaddress2;
-    data['country'] = this.country;
-    data['delegateid'] = this.delegateid;
-    data['datecustomeraccount'] = this.datecustomeraccount;
-    data['vlat'] = this.vlat;
-    data['vlong'] = this.vlong;
-    data['vimage'] = this.vimage;
-    return data;
-  }
+
 }

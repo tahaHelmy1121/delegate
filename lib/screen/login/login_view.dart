@@ -83,7 +83,7 @@ builder: (context , prov){
                 child: Column(
                   children: [
                     Text(
-                      "اهلا بكم قم بتسجيل الدخول",
+                      "اهلا بك قم بتسجيل الدخول",
                       style: TextStyles.font24BlackBold
                           .copyWith(fontSize: 19, letterSpacing: 1),
                     ),
@@ -99,7 +99,7 @@ builder: (context , prov){
                       },
                         context: context,
                         controller: context.watch<LoginProvider>().emailEdtingController,
-                        hint: "اسم المندوب"),
+                        hint: "الاسم"),
                     SizedBox(
                       height: 30,
                     ),

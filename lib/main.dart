@@ -1,3 +1,4 @@
+import 'package:delegate/provider/client_provider.dart';
 import 'package:delegate/provider/start_visit_provider.dart';
 import 'package:delegate/screen/Visit%20history/Visit%20history_view.dart';
 import 'package:delegate/screen/login/login_view.dart';
@@ -21,11 +22,15 @@ void main() async {
   await sl<CacheHelper>().init();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
-      create: (context) => LocaleProvider(context: context)..init(),
+      create: (context) =>
+      LocaleProvider(context: context)
+        ..init(),
       lazy: true,
     ),
     ChangeNotifierProvider(
         create: (context) => StartVisitProvider(context: context)),
+    ChangeNotifierProvider(
+        create: (context) => ClientProvider(context: context)),
   ], child: const MyApp()));
 }
 
@@ -58,7 +63,8 @@ class _MyAppState extends State<MyApp> {
 
   void initState() {
     checkUser(context: context)
-;    getCurrentLocation().then((value) async {
+    ;
+    getCurrentLocation().then((value) async {
       print('${value.latitude}********${value.longitude}');
       lat = value.latitude;
       lng = value.longitude;
@@ -77,7 +83,7 @@ class _MyAppState extends State<MyApp> {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return Consumer<LocaleProvider>(
-          builder: (context, localizationProvider, child) {
+          builder: (context, provider, child) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(useMaterial3: false, fontFamily: "Cairo"),
@@ -88,7 +94,7 @@ class _MyAppState extends State<MyApp> {
                 GlobalCupertinoLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
               ],
-              locale: localizationProvider.locale,
+              locale: provider.locale,
               supportedLocales: L10n.all,
             );
           },

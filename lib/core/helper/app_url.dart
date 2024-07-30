@@ -1,7 +1,7 @@
 
-
-            String loginUrl = "https://erp.gt4it.com/taha2024/controllers/visitsApi.php?do=login";
-           String recordeAttendUrl = "https://erp.gt4it.com/taha2024/controllers/visitsApi.php?do=recordAttendance";
-           String visits = "https://erp.gt4it.com/taha2024/controllers/visitsApi.php?do=visits";
-           String startVisit = "https://erp.gt4it.com/taha2024/controllers/visitsApi.php?do=visitStart";
-           String startEnd="https://erp.gt4it.com/taha2024/controllers/visitsApi.php?do=visitEnd";
+          String baseUrl = "https://erp.gt4it.com/acc2022/controllers/visitsApi.php";
+            String loginUrl = "${baseUrl}?do=login";
+           String recordeAttendUrl = "${baseUrl}?do=recordAttendance";
+           String visits = "${baseUrl}?do=visits";
+           String startVisit = "${baseUrl}?do=visitStart";
+           String startEnd="${baseUrl}?do=visitEnd";

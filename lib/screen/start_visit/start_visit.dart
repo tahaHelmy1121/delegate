@@ -1,26 +1,39 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:delegate/provider/start_visit_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../../custom_widget/drewnavbar.dart';
+
 class StartVisit extends StatefulWidget {
-  var startlat;
-  var startlong;
+
   var clientId;
   var visit_id;
 
   StartVisit(
-      {super.key, this.clientId, this.startlat, this.startlong, this.visit_id});
+      {super.key, this.clientId, this.visit_id});
 
   @override
   State<StartVisit> createState() => _StartVisitState();
 }
 
 class _StartVisitState extends State<StartVisit> {
+  var address;
+  var lat;
+  var lng;
+
+  @override
+  void initState() {
+    getCurrentLocation().then((value) async {
+      print('${value.latitude}********${value.longitude}');
+      lat = value.latitude;
+      lng = value.longitude;
+
+      setState(() {});
+    });
+    setState(() {});
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +83,26 @@ class _StartVisitState extends State<StartVisit> {
                               Container(
                                 child: InkWell(
                                   onTap: () {
-                               context.read<StartVisitProvider>().uploadSingleImage();
+
+                                    context
+                                        .read<StartVisitProvider>()
+                                        .pickAndResizeImage();
                                   },
-                                  child:context.watch<StartVisitProvider>().diplayImage==null?Image.asset("assets/images/R (1).png"): Image.file(
-    context.watch<StartVisitProvider>().diplayImage!,
-                                    width: MediaQuery.of(context).size.width * 0.3,
-                                    height: 100,
-                                  ),
+                                  child: context
+                                              .watch<StartVisitProvider>()
+                                              .diplayImage ==
+                                          null
+                                      ? Image.asset("assets/images/R (1).png")
+                                      : Image.file(
+                                          context
+                                              .watch<StartVisitProvider>()
+                                              .diplayImage!,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: 100,
+                                        ),
                                 ),
                                 width: MediaQuery.of(context).size.width * 0.3,
                                 height: 100,
@@ -92,13 +118,13 @@ class _StartVisitState extends State<StartVisit> {
                           SizedBox(
                             height: 40,
                           ),
-                          InkWell(
+                     lat!=null?     InkWell(
                             onTap: () {
                               context.read<StartVisitProvider>().getSatrtVisit(
                                   context: context,
                                   clientId: widget.clientId,
-                                  startLat: widget.startlat,
-                                  startLong: widget.startlong,
+                                  startLat: lat,
+                                  startLong:lng,
                                   visit_id: widget.visit_id);
                             },
                             child: Container(
@@ -118,7 +144,9 @@ class _StartVisitState extends State<StartVisit> {
                                   color: Colors.black,
                                   borderRadius: BorderRadius.circular(20)),
                             ),
-                          )
+                          ):CircularProgressIndicator(
+                       color: Colors.black,
+                     )
                         ],
                       ),
                       margin: EdgeInsets.only(

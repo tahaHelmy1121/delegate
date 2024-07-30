@@ -1,16 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:delegate/custom_widget/drewnavbar.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/helper/awesomedialog.dart';
 import '../data/data/start_visit_repo.dart';
 import '../data/model/start_visit.dart';
-import '../screen/Visit history/Visit history_view.dart';
 
 class StartVisitProvider extends ChangeNotifier {
   BuildContext context;
@@ -39,8 +40,10 @@ class StartVisitProvider extends ChangeNotifier {
   File? diplayImage;
 
   uploadSingleImage() async {
-    var pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    var pickedImage = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 40,
+    );
     if (pickedImage != null) {
       diplayImage = await File(pickedImage.path);
 
@@ -56,6 +59,25 @@ class StartVisitProvider extends ChangeNotifier {
     }
   }
 
+  Future<File> resizeImage(File file, int width, int height) async {
+    final originalImage = img.decodeImage(file.readAsBytesSync());
+    final resizedImage = img.copyResize(originalImage!, width: width, height: height);
+    final resizedFile = File('${file.path}_resized.jpg'); // Replace with desired output path
+    resizedFile.writeAsBytesSync(img.encodeJpg(resizedImage));
+    return resizedFile;
+  }
+  Future<void> pickAndResizeImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      final imageFile = File(pickedFile.path);
+      diplayImage = imageFile;
+      notifyListeners();
+    final resizedImage = await resizeImage(imageFile, 800, 400); //
+      var bytes = await resizedImage!.readAsBytes();//
+      x = base64Encode(bytes!);// Adjust width and height as needed
+    print(resizedImage);
+  }
+  }
   SharedPreferences? sharedPreferences;
   StartVisitModel? startVisitModel;
 
@@ -71,7 +93,9 @@ class StartVisitProvider extends ChangeNotifier {
         await SharedPreferences.getInstance();
     var user_id = sharedPreferences!.getString('user_id');
     loadData = true;
-
+    print("zzzzzzzzz");
+   print(x);
+    print("zzzzzzzzz");
     startVisitModel = await StartVisitRepo.startVisitRepo(
       context: context,
       userId: user_id,
@@ -82,8 +106,14 @@ class StartVisitProvider extends ChangeNotifier {
       pickedImage: x,
     );
     if (startVisitModel!.status == 1) {
-      return Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => DrewNavigationBar()));
+      drewAwesomeDialog(
+          context: context,
+          dialogType: DialogType.success,
+          describe: startVisitModel!.reason)
+        ..show().then((value) {
+          return Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => DrewNavigationBar()));
+        });
     } else {
       drewAwesomeDialog(
           context: context,

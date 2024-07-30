@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/theme/fonts.dart';
+import '../../custom_widget/drewnavbar.dart';
 
 class finishVisit extends StatefulWidget {
-  var endLat;
-  var endLong;
+
   var clientId;
   var visit_id;
   var image;
@@ -15,8 +15,7 @@ class finishVisit extends StatefulWidget {
   finishVisit(
       {super.key,
       this.image,
-      this.endLat,
-      this.endLong,
+
       this.clientId,
       this.clientEreaName,
       this.visit_id});
@@ -26,6 +25,23 @@ class finishVisit extends StatefulWidget {
 }
 
 class _finishVisitState extends State<finishVisit> {
+  var address;
+  var lat;
+  var lng;
+
+  @override
+  void initState() {
+    getCurrentLocation().then((value) async {
+      print('${value.latitude}********${value.longitude}');
+      lat = value.latitude;
+      lng = value.longitude;
+
+      setState(() {});
+    });
+    setState(() {});
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +91,7 @@ class _finishVisitState extends State<finishVisit> {
                                     ),
                                   ),
                                   Text(
-                                    "اسم منطقة العميل : ${widget.clientEreaName}",
+                                    "اسم  العميل : ${widget.clientEreaName}",
                                     style: TextStyles.font24BlackBold
                                         .copyWith(fontSize: 15)
                                         .copyWith(
@@ -189,13 +205,13 @@ class _finishVisitState extends State<finishVisit> {
                                       SizedBox(
                                         height: 25,
                                       ),
-                                      InkWell(
+                                  lat != null?    InkWell(
                                         onTap: () {
                                           context.read<FinishProvider>().finishFromRepo(
                                             visit_id: widget.visit_id,
                                             clientid: widget.clientId,
-                                            endlat: widget.endLat,
-                                            endlong: widget.endLong,
+                                            endlat: lat,
+                                            endlong: lng,
 
 
                                           );
@@ -220,6 +236,10 @@ class _finishVisitState extends State<finishVisit> {
                                               borderRadius:
                                                   BorderRadius.circular(20)),
                                         ),
+                                      ):Center(
+                                        child: CircularProgressIndicator(
+                                                                            color: Colors.black,
+                                                                          ),
                                       )
                                     ],
                                   ),

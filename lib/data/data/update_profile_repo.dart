@@ -23,7 +23,7 @@ class UpdateProfileRepo {
       'password': password,
 
     };
-    var response = await http.post(Uri.parse("https://erp.gt4it.com/taha2024/controllers/visitsApi.php?do=updateProfile"),body: jsonEncode(body));
+    var response = await http.post(Uri.parse("${baseUrl}?do=updateProfile"),body: jsonEncode(body));
     if (response.statusCode == 200) {
       return updateProfile = updateProfileFromJson(response.body);
     } else {

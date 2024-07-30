@@ -55,10 +55,31 @@ dependencies:
   get_it:
   http:
   awesome_dialog:
-
+  launcher_name: ^1.0.2
+  flutter_launcher_icons:
+  flutter_native_splash: ^2.3.10
 
 dev_dependencies:
+launcher_name:
+  default: "مندوبى"
+  ar: "مندوبى"
+flutter_native_splash:
+  android_12:
 
+    image: assets/images/icon (2).png
+    icon_background_color: "#ffffff"
+    image_dark: assets/images/icon (2).png
+    icon_background_color_dark: "#121212"
+  image: assets/images/icon (2).png
+  color: "#ffffff"
+
+  android: true
+  ios: true
+  web: false
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/icon (2).png"
   flutter_test:
     sdk: flutter
 
