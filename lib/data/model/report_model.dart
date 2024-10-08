@@ -1,105 +1,41 @@
+// To parse this JSON data, do
+//
+//     final customerReportModel = customerReportModelFromJson(jsonString);
+
 import 'dart:convert';
 
-ReportModel reportModelFromJson(String str) => ReportModel.fromJson(json.decode(str));
+List<CustomerReportModel> customerReportModelFromJson(String str) => List<CustomerReportModel>.from(json.decode(str).map((x) => CustomerReportModel.fromJson(x)));
 
-class ReportModel {
-  Client? client;
-  var sellbilltotal;
-  var lastsellbilldate;
-  List<Clientdebtchanges>? clientdebtchanges;
+String customerReportModelToJson(List<CustomerReportModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-  ReportModel(
-      {this.client,
-        this.sellbilltotal,
-        this.lastsellbilldate,
-        this.clientdebtchanges});
-
-  ReportModel.fromJson(Map<String, dynamic> json) {
-    client =
-    json['client'] != null ? new Client.fromJson(json['client']) : null;
-    sellbilltotal = json['sellbilltotal'];
-    lastsellbilldate = json['lastsellbilldate'];
-    if (json['clientdebtchanges'] != null) {
-      clientdebtchanges = <Clientdebtchanges>[];
-      json['clientdebtchanges'].forEach((v) {
-        clientdebtchanges!.add(new Clientdebtchanges.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.client != null) {
-      data['client'] = this.client!.toJson();
-    }
-    data['sellbilltotal'] = this.sellbilltotal;
-    data['lastsellbilldate'] = this.lastsellbilldate;
-    if (this.clientdebtchanges != null) {
-      data['clientdebtchanges'] =
-          this.clientdebtchanges!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Client {
+class CustomerReportModel {
   var clientname;
-  var clientphone;
-  var clientdetails;
   var clientdebt;
   var debtlimit;
   var residual;
+var lastsellbilldate;
 
-  Client(
-      {this.clientname,
-        this.clientphone,
-        this.clientdetails,
-        this.clientdebt,
-        this.debtlimit,
-        this.residual});
+  CustomerReportModel({
+     this.clientname,
+     this.clientdebt,
+     this.debtlimit,
+     this.residual,
+     this.lastsellbilldate,
+  });
 
-  Client.fromJson(Map<String, dynamic> json) {
-    clientname = json['clientname'];
-    clientphone = json['clientphone'];
-    clientdetails = json['clientdetails'];
-    clientdebt = json['clientdebt'];
-    debtlimit = json['debtlimit'];
-    residual = json['residual'];
-  }
+  factory CustomerReportModel.fromJson(Map<String, dynamic> json) => CustomerReportModel(
+    clientname: json["clientname"],
+    clientdebt: json["clientdebt"],
+    debtlimit: json["debtlimit"],
+    residual: json["residual"],
+    lastsellbilldate: json["lastsellbilldate"],
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['clientname'] = this.clientname;
-    data['clientphone'] = this.clientphone;
-    data['clientdetails'] = this.clientdetails;
-    data['clientdebt'] = this.clientdebt;
-    data['debtlimit'] = this.debtlimit;
-    data['residual'] = this.residual;
-    return data;
-  }
-}
-
-class Clientdebtchanges {
-  var processname;
-  var clientdebtchangeamount;
-  var clientdebtchangedate;
-
-  Clientdebtchanges(
-      {this.processname,
-        this.clientdebtchangeamount,
-        this.clientdebtchangedate});
-
-  Clientdebtchanges.fromJson(Map<String, dynamic> json) {
-    processname = json['processname'];
-    clientdebtchangeamount = json['clientdebtchangeamount'];
-    clientdebtchangedate = json['clientdebtchangedate'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['processname'] = this.processname;
-    data['clientdebtchangeamount'] = this.clientdebtchangeamount;
-    data['clientdebtchangedate'] = this.clientdebtchangedate;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "clientname": clientname,
+    "clientdebt": clientdebt,
+    "debtlimit": debtlimit,
+    "residual": residual,
+    "lastsellbilldate": lastsellbilldate,
+  };
 }

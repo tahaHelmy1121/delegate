@@ -6,7 +6,6 @@ import '../../core/theme/fonts.dart';
 import '../../custom_widget/drewnavbar.dart';
 
 class finishVisit extends StatefulWidget {
-
   var clientId;
   var visit_id;
   var image;
@@ -15,7 +14,6 @@ class finishVisit extends StatefulWidget {
   finishVisit(
       {super.key,
       this.image,
-
       this.clientId,
       this.clientEreaName,
       this.visit_id});
@@ -118,7 +116,8 @@ class _finishVisitState extends State<finishVisit> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.7,
                                 child: Form(
-                                  key: context.watch<FinishProvider>().globalKey,
+                                  key:
+                                      context.watch<FinishProvider>().globalKey,
                                   child: Column(
                                     children: [
                                       DropdownButtonFormField(
@@ -130,16 +129,16 @@ class _finishVisitState extends State<finishVisit> {
                                               .visitsCasessSelcted,
                                           decoration: InputDecoration(
                                             focusedBorder: OutlineInputBorder(
-                                              borderSide:
-                                                  BorderSide(color: Colors.black),
+                                              borderSide: BorderSide(
+                                                  color: Colors.black),
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
                                             filled: true,
                                             fillColor: Colors.white,
                                             border: OutlineInputBorder(
-                                              borderSide:
-                                                  BorderSide(color: Colors.black),
+                                              borderSide: BorderSide(
+                                                  color: Colors.black),
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
@@ -154,7 +153,8 @@ class _finishVisitState extends State<finishVisit> {
                                                 value.cases.toString(),
                                                 style: TextStyle(
                                                     fontSize: 14,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                                 maxLines: 1,
                                               ),
                                             );
@@ -169,13 +169,9 @@ class _finishVisitState extends State<finishVisit> {
                                         height: 25,
                                       ),
                                       TextFormField(
-                                        validator: (String? value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "ادخل الملاحظة";
-                                          }
-                                          return null;
-                                        },
-                                        controller: context.watch<FinishProvider>().noteController,
+                                        controller: context
+                                            .watch<FinishProvider>()
+                                            .noteController,
                                         maxLines: 5,
                                         decoration: InputDecoration(
                                           labelText: "ملاحظة",
@@ -205,42 +201,55 @@ class _finishVisitState extends State<finishVisit> {
                                       SizedBox(
                                         height: 25,
                                       ),
-                                  lat != null?    InkWell(
-                                        onTap: () {
-                                          context.read<FinishProvider>().finishFromRepo(
-                                            visit_id: widget.visit_id,
-                                            clientid: widget.clientId,
-                                            endlat: lat,
-                                            endlong: lng,
+                                      lat != null
+                                          ? InkWell(
+                                              onTap: () {
+                                                getCurrentLocation().then(
+                                                    (value) async {
+                                                  print(
+                                                      '${value.latitude}********${value.longitude}');
+                                                  lat = value.latitude;
+                                                  lng = value.longitude;
 
-
-                                          );
-                                        },
-                                        child: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.5,
-                                          child: Center(
-                                              child: Center(
-                                                  child: Text(
-                                            "حفظ",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                letterSpacing: 1,
-                                                fontWeight: FontWeight.bold),
-                                          ))),
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                              color: Colors.black,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                        ),
-                                      ):Center(
-                                        child: CircularProgressIndicator(
-                                                                            color: Colors.black,
-                                                                          ),
-                                      )
+                                                  setState(() {});
+                                                }).then((value) => context
+                                                    .read<FinishProvider>()
+                                                    .finishFromRepo(
+                                                      visit_id: widget.visit_id,
+                                                      clientid: widget.clientId,
+                                                      endlat: lat,
+                                                      endlong: lng,
+                                                    ));
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                                child: Center(
+                                                    child: Center(
+                                                        child: Text(
+                                                  "حفظ",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      letterSpacing: 1,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ))),
+                                                height: 60,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                              ),
+                                            )
+                                          : Center(
+                                              child: CircularProgressIndicator(
+                                                color: Colors.black,
+                                              ),
+                                            )
                                     ],
                                   ),
                                 ),

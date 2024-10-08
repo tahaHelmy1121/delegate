@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../screen/Attendance/Attendance_view.dart';
-import '../screen/Customer Report/search_client_report.dart';
+import '../screen/Customer Report/categories.dart';
 import '../screen/Visit history/Visit history_view.dart';
 
 class DrewNavigationBar extends StatefulWidget {
@@ -35,8 +35,8 @@ class _DrewNavigationBarState extends State<DrewNavigationBar> {
   int currentIndex = 0;
 static  List body = [
   VisitHistoryView(),
-  SearchReport(),
-  ProfileView(),
+  CustomerReport(),
+Categories(),
   Attendance(
     long:lng ,
     lat: lat,
@@ -56,7 +56,7 @@ static  List body = [
              destinations: [
          NavigationDestination(icon:Icon(Icons.history), label:"سجل الزيارات"),
          NavigationDestination(icon:Icon(Icons.report), label:"تقرير العميل") ,
-         NavigationDestination(icon:Icon(Icons.person), label:"الملف الشخصى"),
+         NavigationDestination(icon:Icon(Icons.category_sharp), label:"المخزن"),
                NavigationDestination(icon:Icon(Icons.add_chart), label:"سجل حضورك")
              ],
           selectedIndex: currentIndex,

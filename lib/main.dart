@@ -1,4 +1,5 @@
 import 'package:delegate/provider/client_provider.dart';
+import 'package:delegate/provider/profile_provider.dart';
 import 'package:delegate/provider/start_visit_provider.dart';
 import 'package:delegate/screen/Visit%20history/Visit%20history_view.dart';
 import 'package:delegate/screen/login/login_view.dart';
@@ -31,6 +32,8 @@ void main() async {
         create: (context) => StartVisitProvider(context: context)),
     ChangeNotifierProvider(
         create: (context) => ClientProvider(context: context)),
+    ChangeNotifierProvider(
+        create: (context) => ProfileProvider(context: context)),
   ], child: const MyApp()));
 }
 

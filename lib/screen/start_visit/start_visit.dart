@@ -120,12 +120,16 @@ class _StartVisitState extends State<StartVisit> {
                           ),
                      lat!=null?     InkWell(
                             onTap: () {
-                              context.read<StartVisitProvider>().getSatrtVisit(
+                              getCurrentLocation().then((value) async {
+                                lat = value.latitude;
+                                lng = value.longitude;
+                              }).then((value) =>   context.read<StartVisitProvider>().getSatrtVisit(
                                   context: context,
                                   clientId: widget.clientId,
                                   startLat: lat,
                                   startLong:lng,
-                                  visit_id: widget.visit_id);
+                                  visit_id: widget.visit_id));
+
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.5,

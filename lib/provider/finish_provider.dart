@@ -70,19 +70,20 @@ class FinishProvider extends ChangeNotifier {
  endlong}) async {
     sharedPreferences = await SharedPreferences.getInstance();
     var user = sharedPreferences!.getString("user_id");
-   if(globalKey.currentState!.validate()){
-     endVisitModel =await EndVisit.endtVisit(
-       context: context,
-       user_id: user,
-       visit_id: visit_id,
-       note: noteController.text,
-       visitcaseid: visitsCasessSelcted,
-       clientid: clientid,
-       end_lat:endlat ,
-       end_long: endlong,
-     );
-   }if(endVisitModel!.status==1){
+    endVisitModel =await EndVisit.endtVisit(
+      context: context,
+      user_id: user,
+      visit_id: visit_id,
+      note: noteController.text,
+      visitcaseid: visitsCasessSelcted,
+      clientid: clientid,
+      end_lat:endlat ,
+      end_long: endlong,
+    );
+
+   if(endVisitModel!.status==1){
       MassageApp.snackBar(endVisitModel!.reason.toString(), context);
+      Navigator.pop(context);
       Navigator.push(
           context, MaterialPageRoute(builder: (_) => DrewNavigationBar()));
     } else {

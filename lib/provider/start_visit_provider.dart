@@ -41,7 +41,7 @@ class StartVisitProvider extends ChangeNotifier {
 
   uploadSingleImage() async {
     var pickedImage = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
+      source: ImageSource.camera,
       imageQuality: 40,
     );
     if (pickedImage != null) {
@@ -67,14 +67,14 @@ class StartVisitProvider extends ChangeNotifier {
     return resizedFile;
   }
   Future<void> pickAndResizeImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera,);
     if (pickedFile != null) {
       final imageFile = File(pickedFile.path);
       diplayImage = imageFile;
       notifyListeners();
     final resizedImage = await resizeImage(imageFile, 800, 400); //
-      var bytes = await resizedImage!.readAsBytes();//
-      x = base64Encode(bytes!);// Adjust width and height as needed
+      var bytes = await resizedImage.readAsBytes();//
+      x = base64Encode(bytes);// Adjust width and height as needed
     print(resizedImage);
   }
   }
@@ -111,9 +111,13 @@ class StartVisitProvider extends ChangeNotifier {
           dialogType: DialogType.success,
           describe: startVisitModel!.reason)
         ..show().then((value) {
-          return Navigator.pushReplacement(context,
+          Navigator.pop(context);
+          Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => DrewNavigationBar()));
+
         });
+      diplayImage=null;
+
     } else {
       drewAwesomeDialog(
           context: context,
