@@ -1,4 +1,6 @@
 import 'package:delegate/provider/addnewpoint_provider.dart';
+import 'package:delegate/provider/filter_provider.dart';
+import 'package:delegate/screen/chioce_point_add/show_point_sale/show_point_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,99 +21,108 @@ class _FilterPointState extends State<FilterPoint> {
           builder: (context, prov) {
             return context.watch<GetAddPointProvider>().loading
                 ? Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  context.watch<GetAddPointProvider>().loading
-                      ? Column(
-                    children: [
-                      SizedBox(
-                        height: 25,
-                      ),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: DropdownButtonFormField(
-                              alignment: Alignment.center,
-                              isExpanded: true,
-                              padding: const EdgeInsets.all(10),
-                              value: context
-                                  .watch<GetAddPointProvider>()
-                                  .ereaSelected,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.grey.shade200,
-                                border: InputBorder.none,
-                              ),
-                              items: context
-                                  .watch<GetAddPointProvider>()
-                                  .clienterea!
-                                  .map((value) {
-                                return DropdownMenuItem(
-                                  value: value.id,
-                                  child: Text(
-                                    value.text.toString(),
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                    maxLines: 1,
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        context.watch<GetAddPointProvider>().loading
+                            ? Column(
+                                children: [
+                                  SizedBox(
+                                    height: 25,
                                   ),
-                                );
-                              }).toList(),
-                              onChanged: (v) async {
-                                context
-                                    .read<GetAddPointProvider>()
-                                    .ereaSelected = v;
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      InkWell(
-                        onTap: () {
-
-                        },
-                        child: Container(
-                          child: Center(
-                            child: Text(
-                              "بحث",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius:
-                              BorderRadius.circular(25)),
-                          width: MediaQuery.of(context).size.width *
-                              0.4,
-                          height:
-                          MediaQuery.of(context).size.height *
-                              0.0750,
-                        ),
-                      ),
-
-                    ],
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.7,
+                                        child: DropdownButtonFormField(
+                                          alignment: Alignment.center,
+                                          isExpanded: true,
+                                          padding: const EdgeInsets.all(10),
+                                          value: context
+                                              .watch<GetAddPointProvider>()
+                                              .ereaSelected,
+                                          decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: Colors.grey.shade200,
+                                            border: InputBorder.none,
+                                          ),
+                                          items: context
+                                              .watch<GetAddPointProvider>()
+                                              .clienterea!
+                                              .map((value) {
+                                            return DropdownMenuItem(
+                                              value: value.id,
+                                              child: Text(
+                                                value.text.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                                maxLines: 1,
+                                              ),
+                                            );
+                                          }).toList(),
+                                          onChanged: (v) async {
+                                            context
+                                                .read<GetAddPointProvider>()
+                                                .ereaSelected = v;
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => ShowPointSale(
+                                                pointSale: context
+                                                        .watch<
+                                                        GetAddPointProvider>()
+                                                        .ereaSelected,
+                                                  )));
+                                    },
+                                    child: Container(
+                                      child: Center(
+                                        child: Text(
+                                          "بحث",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius:
+                                              BorderRadius.circular(25)),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.0750,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : CircularProgressIndicator(
+                                color: Colors.black,
+                              )
+                      ],
+                    ),
                   )
-                      : CircularProgressIndicator(
-                    color: Colors.black,
-                  )
-                ],
-              ),
-            )
                 : Center(
-              child: CircularProgressIndicator(
-                color: Colors.black,
-              ),
-            );
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                  );
           },
         ),
       ),

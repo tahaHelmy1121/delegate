@@ -54,6 +54,7 @@ dependencies:
   path:
   get_it:
   http:
+  url_launcher: ^6.0.13
   awesome_dialog:
   launcher_name: ^1.0.2
   flutter_launcher_icons:
